@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block content %}
+<section class="hero">
+  <div class="symbol">📘</div><h1>Réussite Sciences</h1>
+  <p>Ton espace d'apprentissage pour le lycée et l'université.</p>
+  <p>Mathématiques · Physique-Chimie · SVT · Informatique</p>
+  <a class="btn" href="{{ url_for('register') }}">Créer un compte</a>
+  <a class="btn secondary" href="{{ url_for('login') }}">Se connecter</a>
+</section>
+{% endblock %}

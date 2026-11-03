@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block title %}Mon espace{% endblock %}{% block content %}
+<h1>Mon espace d'étude</h1><p class="muted">Bienvenue {{ session.get('email') }}.</p>
+<div class="cards">
+<a class="card" href="{{ url_for('ai_tutor') }}">🧠<b>Professeur IA</b><small>Explications de cours — bientôt connecté</small></a>
+<a class="card" href="{{ url_for('training') }}">✅<b>Entraînements</b><small>QCM et vrai/faux — espace à construire</small></a>
+<a class="card" href="{{ url_for('exams') }}">📝<b>Sujets d'examen</b><small>Exercices et corrigés — espace à construire</small></a>
+</div>
+<section class="panel"><h2>Ajouter un cours ou une photo</h2>
+<form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+<input type="file" name="document" accept=".pdf,.png,.jpg,.jpeg,.webp,.doc,.docx" capture="environment" required>
+<button class="btn">Enregistrer le document</button></form>
+<p class="muted">Formats : PDF, JPG, PNG, WebP, DOC et DOCX. Taille maximale : 20 Mo.</p></section>
+<section class="panel"><h2>Mes documents</h2>
+{% if docs %}<ul>{% for d in docs %}<li><a href="{{ url_for('download_document', doc_id=d.id) }}">{{ d.original_name }}</a> <small>— {{ d.uploaded_at }}</small></li>{% endfor %}</ul>
+{% else %}<p class="muted">Aucun document pour le moment.</p>{% endif %}</section>
+{% endblock %}

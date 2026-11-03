@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block title %}Connexion{% endblock %}{% block content %}
+<h1>Connexion</h1><form method="post" class="panel">
+<label>E-mail<input type="email" name="email" required autocomplete="email"></label>
+<label>Mot de passe<input type="password" name="password" required autocomplete="current-password"></label>
+<button class="btn">Se connecter</button></form><p>Pas encore de compte ? <a href="{{ url_for('register') }}">Créer un compte</a></p>
+{% endblock %}
