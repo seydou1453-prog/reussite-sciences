@@ -69,3 +69,90 @@ input, textarea, select {
     padding: 15px;
   }
 }
+
+/* NOUVEAU DESIGN PROFESSIONNEL */
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f6fc;
+  color: #18324f;
+}
+
+.hero {
+  max-width: 900px;
+  margin: 35px auto;
+  padding: 45px 25px;
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff, #e5f1ff);
+  border-radius: 24px;
+  box-shadow: 0 8px 30px rgba(18, 59, 104, 0.10);
+}
+
+.hero h1 {
+  color: #123b68;
+  font-size: 38px;
+  margin: 15px 0;
+}
+
+.hero p {
+  color: #52677f;
+  margin: 12px 0;
+  font-size: 17px;
+}
+
+.symbol {
+  font-size: 55px;
+}
+
+.btn {
+  display: inline-block;
+  margin: 10px 5px;
+  padding: 13px 24px;
+  background: #1769aa;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #0d477c;
+}
+
+.btn.secondary {
+  background: #ffffff;
+  color: #1769aa;
+  border: 2px solid #1769aa;
+}
+
+.card {
+  border: 1px solid #e1eaf4;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(18, 59, 104, 0.08);
+}
+
+input, textarea, select {
+  border: 1px solid #cbd8e8;
+  border-radius: 9px;
+  padding: 12px;
+}
+
+button {
+  border-radius: 9px;
+}
+
+@media (max-width: 600px) {
+  .hero {
+    margin: 15px 8px;
+    padding: 30px 15px;
+  }
+
+  .hero h1 {
+    font-size: 29px;
+  }
+
+  .btn {
+    display: block;
+    margin: 12px auto;
+  }
+}
