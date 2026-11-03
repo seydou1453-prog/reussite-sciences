@@ -1,0 +1,11 @@
+{
+  "name": "Réussite Sciences",
+  "short_name": "Réussite",
+  "description": "Application éducative intelligente pour le lycée et l'université.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f5f7fa",
+  "theme_color": "#1769aa",
+  "orientation": "portrait"
+}
