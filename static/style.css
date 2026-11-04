@@ -156,3 +156,32 @@ button {
     margin: 12px auto;
   }
 }
+/* CORRECTION AFFICHAGE DES CARTES */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+.card {
+  display: block;
+  min-width: 0;
+  width: 100%;
+  overflow-wrap: break-word;
+}
+
+/* ADAPTATION AUX TELEPHONES */
+
+@media screen and (max-width: 768px) {
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .card {
+    width: 100%;
+    padding: 16px;
+  }
+}
