@@ -1,3 +1,83 @@
-{% extends "base.html" %}{% block content %}
-<h1>Professeur IA</h1><div class="panel"><p>Cette page accueillera l'explication des cours importés, les réponses étape par étape et les sources vérifiables.</p><p><b>État :</b> connexion IA non configurée dans cette version de démarrage.</p><a href="{{ url_for('dashboard') }}">Retour à mon espace</a></div>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>🧠 Professeur IA</h1>
+
+    <div class="panel">
+        <p>Bienvenue dans ton espace de soutien scolaire intelligent.</p>
+
+        <label for="matiere">Choisis ta matière :</label>
+        <select id="matiere">
+            <option>Mathématiques</option>
+            <option>Physique-Chimie</option>
+            <option>SVT</option>
+            <option>Informatique</option>
+        </select>
+
+        <label for="niveau">Choisis ton niveau :</label>
+        <select id="niveau">
+            <option>Collège</option>
+            <option>Lycée</option>
+            <option>Université</option>
+        </select>
+
+        <div id="conversation">
+            <p>👨‍🏫 Bonjour ! Quelle notion souhaites-tu comprendre aujourd'hui ?</p>
+        </div>
+
+        <form id="question-form">
+            <textarea
+                id="question"
+                placeholder="Écris ta question ou ton exercice ici..."
+                required
+                rows="4"></textarea>
+
+            <button type="submit">Envoyer ma question</button>
+        </form>
+
+        <p id="statut"></p>
+
+        <a href="{{ url_for('dashboard') }}">Retour à mon espace</a>
+    </div>
+</div>
+
+<script>
+document.getElementById("question-form").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const question = document.getElementById("question").value.trim();
+    const matiere = document.getElementById("matiere").value;
+    const niveau = document.getElementById("niveau").value;
+    const conversation = document.getElementById("conversation");
+    const statut = document.getElementById("statut");
+
+    if (!question) return;
+
+    const message = document.createElement("p");
+    message.textContent = "🧑‍🎓 " + question;
+    conversation.appendChild(message);
+
+    document.getElementById("question").value = "";
+    statut.textContent = "Préparation de ta question...";
+
+    try {
+        const response = await fetch("/ask-ai", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({question, matiere, niveau})
+        });
+
+        const data = await response.json();
+
+        const answer = document.createElement("p");
+        answer.textContent = "👨‍🏫 " + (data.answer || data.error || "Réponse indisponible.");
+        conversation.appendChild(answer);
+
+        statut.textContent = "";
+    } catch (error) {
+        statut.textContent = "Le service IA n'est pas encore connecté.";
+    }
+});
+</script>
 {% endblock %}
