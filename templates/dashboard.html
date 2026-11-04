@@ -1,9 +1,29 @@
 {% extends "base.html" %}{% block title %}Mon espace{% endblock %}{% block content %}
 <h1>Mon espace d'étude</h1><p class="muted">Bienvenue {{ session.get('email') }}.</p>
 <div class="cards">
-<a class="card" href="{{ url_for('ai_tutor') }}">🧠<b>Professeur IA</b><small>Explications de cours — bientôt connecté</small></a>
-<a class="card" href="{{ url_for('training') }}">✅<b>Entraînements</b><small>QCM et vrai/faux — espace à construire</small></a>
-<a class="card" href="{{ url_for('exams') }}">📝<b>Sujets d'examen</b><small>Exercices et corrigés — espace à construire</small></a>
+<a class="card" href="{{ url_for('ai_tutor') }}">
+  <span class="card-icon">🧠</span>
+  <span class="card-content">
+    <strong>Professeur IA</strong>
+    <small>Explications de cours et accompagnement</small>
+  </span>
+</a>
+
+<a class="card" href="{{ url_for('training') }}">
+  <span class="card-icon">📗</span>
+  <span class="card-content">
+    <strong>Entraînements</strong>
+    <small>QCM et exercices avec corrections</small>
+  </span>
+</a>
+
+<a class="card" href="{{ url_for('exams') }}">
+  <span class="card-icon">📝</span>
+  <span class="card-content">
+    <strong>Sujets d'examen</strong>
+    <small>Exercices et sujets corrigés</small>
+  </span>
+</a>
 </div>
 <section class="panel"><h2>Ajouter un cours ou une photo</h2>
 <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
