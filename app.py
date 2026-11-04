@@ -2,7 +2,12 @@ import os
 import sqlite3
 from functools import wraps
 from pathlib import Path
-from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory
+from flask import (
+    Flask, render_template, request, redirect,
+    url_for, session, flash, send_from_directory, jsonify
+)
+
+from openai import OpenAI
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 
@@ -146,6 +151,67 @@ def download_document(doc_id):
 def ai_tutor():
     return render_template("ai_tutor.html")
 
+@app.route("/ask-ai", methods=["POST"])
+@login_required
+def ask_ai():
+    if not os.environ.get("OPENAI_API_KEY"):
+        return jsonify({
+            "error": "Le service IA n'est pas encore configuré."
+        }), 503
+
+    data = request.get_json(silent=True) or {}
+
+    question = str(data.get("question", "")).strip()
+    matiere = str(data.get("matiere", "")).strip()
+    niveau = str(data.get("niveau", "")).strip()
+
+    matieres = [
+        "Mathématiques",
+        "Physique-Chimie",
+        "SVT",
+        "Informatique"
+    ]
+
+    niveaux = ["Collège", "Lycée", "Université"]
+
+    if not question:
+        return jsonify({"error": "Écris une question."}), 400
+
+    if len(question) > 3000:
+        return jsonify({"error": "Question trop longue."}), 400
+
+    if matiere not in matieres or niveau not in niveaux:
+        return jsonify({"error": "Matière ou niveau invalide."}), 400
+
+    try:
+        client = OpenAI()
+
+        response = client.responses.create(
+            model="gpt-5.5",
+            instructions=(
+                "Tu es le Professeur IA de Réussite Sciences. "
+                "Tu aides les élèves à comprendre leurs cours. "
+                "Explique simplement, avec des exemples adaptés. "
+                "Pour les exercices, présente les étapes de résolution "
+                "et explique les formules utilisées. "
+                "Ne donne pas de fausses références. "
+                "Réponds toujours en français."
+            ),
+            input=(
+                f"Matière : {matiere}\n"
+                f"Niveau : {niveau}\n"
+                f"Question : {question}"
+            )
+        )
+
+        return jsonify({"answer": response.output_text})
+
+    except Exception:
+        app.logger.exception("Erreur du service Professeur IA")
+        return jsonify({
+            "error": "Impossible de contacter le professeur IA. Réessaie plus tard."
+        }), 502
+        
 @app.route("/entrainement")
 @login_required
 def training():
